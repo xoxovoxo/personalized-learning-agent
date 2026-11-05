@@ -1,0 +1,12 @@
+{
+  "fictional": true,
+  "session_id": "demo-001",
+  "subject": "mathematics",
+  "topic": "equivalent fractions",
+  "goal": "Understand why 1/2 equals 2/4",
+  "interests": ["cooking"],
+  "reported_barriers": ["The explanations move too quickly"],
+  "preferred_adjustments": ["One example at a time"],
+  "baseline": {"correct": 1, "total": 3},
+  "personal_questions_optional": true
+}
