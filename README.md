@@ -1,52 +1,55 @@
 # Personalized Learning Agent
 
-A lab project exploring how an AI agent can adapt teaching to individual students and help them describe barriers to learning.
+## A collaborative research project in adaptive education
 
-## Project status
+A research project for a professor and three students investigating how AI teaching can adapt to demonstrated knowledge, learning goals, and voluntarily reported learning barriers.
 
-Planning scaffold. This repository contains a project brief, an agent prompt, a fictional example, and an evaluation plan. It does not yet include a running application or an AI model integration.
+**Status: research and implementation planning.** This repository contains project designs, a draft tutor prompt, and fictional examples. There is no running application, validated intervention, or experimental result yet. Roles and schedules below are proposals for team agreement.
 
-## Goal
+## Research question
 
-Adapt explanations, practice difficulty, pacing, and feedback using demonstrated understanding and voluntary student feedback. Explore reasons studying feels difficult without assuming that disengagement indicates a mental health condition.
+Does adapting an AI tutor to both prior knowledge and self-reported learning barriers improve understanding compared with a tutor using the same content without those adaptations?
 
-## Proposed first prototype
+Explore knowledge gaps, unclear explanations, lack of relevance, task overload, and confidence concerns. Mental health diagnosis and treatment are outside the tutor's scope. Concerns beyond educational support should have a reviewed route to human help.
 
-- One subject: introductory mathematics.
-- Fictional student profiles for initial development.
-- A short baseline quiz and optional learning-barrier check-in.
-- One personalized lesson with guided practice.
-- A follow-up quiz and feedback question to inform the next lesson.
-- No permanent learner-type labels or mental health diagnoses.
+## Planned platform
 
-Age group, curriculum, model provider, and interface are still to be selected.
+| Module | Intended capability | Status |
+| --- | --- | --- |
+| Student check-in | Goals, optional barriers, accessibility preferences, baseline quiz | Specified |
+| Learner model | Topic-level evidence and uncertainty | Planned |
+| Adaptive planner | Select explanation, pace, hints, and practice | Planned |
+| Grounded tutor | Teach using approved curriculum and checked examples | Draft prompt |
+| Assessment engine | Equivalent quizzes and retention checks | Planned |
+| Research instrumentation | Versioned conditions and minimal consented events | Specified |
+| Teacher/researcher view | Review educational progress summaries and errors | Later phase |
+| Human support pathway | Reviewed support options and urgent procedures | Design required |
 
-## Learning loop
+## Project guide
 
-1. Ask what the student wants to learn and what feels difficult.
-2. Check relevant prerequisite knowledge with a few questions.
-3. Select an explanation and task size, explaining the choice briefly.
-4. Teach, offer hints, and let the student attempt the task.
-5. Check understanding with a new question rather than repeating the example.
-6. Update the next lesson using performance and student feedback.
+- [Research proposal](RESEARCH.md): questions, comparison design, and literature review.
+- [Architecture](ARCHITECTURE.md): modules, learning loop, and implementation sequence.
+- [Roadmap](ROADMAP.md): proposed 12-week phases and completion criteria.
+- [Team handbook](TEAM.md): responsibilities, meetings, and decisions.
+- [Evaluation protocol](EVALUATION.md): outcomes, controls, and review scenarios.
+- [Data and support policy](DATA_AND_SUPPORT.md): collection limits and human oversight.
+- [Contribution guide](CONTRIBUTING.md): issues, reviews, and reproducibility.
+- [Work backlog](BACKLOG.md): concrete tasks for the team to claim.
+- [Draft tutor prompt](prompts/tutor.md) and [fictional student profile](examples/student-profile.json).
+- [Original planning notes](docs/project-plan.md): early concept; the research documents above define the expanded plan.
 
-## Support boundaries
+## First demonstrator
 
-The agent offers educational support. It does not diagnose or treat mental health conditions. Students can skip personal questions. When concerns exceed educational support, it should offer a route to an appropriate human, such as a teacher, counselor, or trusted adult. It must not claim to have contacted anyone unless an authorized, implemented workflow has actually done so.
+Build one complete tutoring session for equivalent fractions. Use three fictional scenarios: a prerequisite gap, a relevance concern, and a need for smaller steps. Explain the teaching choice, offer a lesson, check understanding with a new question, and revise the next step. Allow students to skip personal questions and override the teaching format.
 
-Use only fictional data during this initial lab. Do not commit student identities, private conversations, health information, or API keys. Before use with real students, define consent, access, retention, deletion, human oversight, and age-appropriate support procedures.
+Begin with a deterministic planner and fixed curriculum, then add a language-model adapter. Keep adaptation rules separate from generated wording so the research comparison remains reproducible.
 
-## Repository contents
+## Longer-term scope
 
-- `docs/project-plan.md`: scope, architecture, milestones, and evaluation.
-- `prompts/tutor.md`: draft behavioral instructions for the future agent.
-- `examples/student-profile.json`: explicitly fictional input example.
+After evaluating the first prototype, expand topics, test accessibility options and retention, and explore teacher review tools. Multiple subjects, persistent profiles, and a real-student study require separate review gates. More features are not evidence of better learning.
 
-## Next steps
+## Open decisions
 
-1. Confirm the target age group and curriculum.
-2. Implement a simple lesson-session interface and model adapter.
-3. Add curriculum-grounded content and answer checking.
-4. Evaluate fictional sessions before considering a supervised pilot.
+Target learners, curriculum, provider, budget, study approvals, sample size, licensing, and institutional ownership remain undecided. Literature review and efficacy testing have not been completed. Initial development uses fictional data only. Never commit student records or credentials to this public repository.
 
-No license has been selected yet.
+No license has been selected.
