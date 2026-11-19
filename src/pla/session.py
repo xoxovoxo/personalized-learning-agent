@@ -17,7 +17,9 @@ from pathlib import Path
 from .contracts import Barrier, BarrierValue, Condition, Evidence, SessionRecord, Strategy
 from .curriculum import Curriculum
 from .learner_model import topic_state
+from .llm import ModelError, make_adapter
 from .planner import plan_next
+from .tutor import GroundedTutor
 
 
 @dataclass
@@ -36,7 +38,7 @@ def render_lesson(curriculum: Curriculum, topic: str, strategy: Strategy, intere
     return lesson["source_id"], steps
 
 
-def run_session(scenario: dict, curriculum: Curriculum | None = None) -> SessionResult:
+def run_session(scenario: dict, curriculum: Curriculum | None = None, tutor: GroundedTutor | None = None) -> SessionResult:
     if not scenario.get("fictional", False):
         raise ValueError("Only fictional scenarios may be run in this demonstrator.")
     curriculum = curriculum or Curriculum.load()
@@ -56,6 +58,9 @@ def run_session(scenario: dict, curriculum: Curriculum | None = None) -> Session
         curriculum_version=curriculum.version,
         barrier=barrier,
     )
+    if tutor is not None:
+        record.prompt_version = tutor.prompt_version
+        record.model_id = tutor.adapter.model_id
     result = SessionResult(record)
     say = result.transcript.append
     seen: set[str] = set()
@@ -92,6 +97,14 @@ def run_session(scenario: dict, curriculum: Curriculum | None = None) -> Session
     for cycle in range(1, max_cycles + 1):
         plan = plan_next(curriculum, record.evidence, record.condition, barrier, frozenset(rejected), seen)
         source_id, steps = render_lesson(curriculum, plan.topic_id, plan.strategy, interest)
+        wording = {"wording": "approved_text"}
+        if tutor is not None:
+            out = tutor.render(plan.strategy, curriculum.topics[plan.topic_id]["title"], steps)
+            steps = out.steps
+            wording = {"wording": "model" if out.used_model else "approved_text_fallback",
+                       "fallback_reason": out.fallback_reason}
+            if out.fallback_reason:
+                say(f"  (model output not used: {out.fallback_reason}; showing approved text)")
         result.strategies.append(plan.strategy)
         say(f"CYCLE {cycle}: {plan.strategy.value} on {plan.topic_id}")
         say(f"  Why: {plan.reason}")
@@ -104,6 +117,7 @@ def run_session(scenario: dict, curriculum: Curriculum | None = None) -> Session
             "topic_id": plan.topic_id,
             "reason": plan.reason,
             "source_id": source_id,
+            **wording,
         })
 
         correct = ask(plan.next_item_id) if plan.next_item_id else None
@@ -136,12 +150,19 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("scenario", type=Path)
     parser.add_argument("--condition", choices=[c.value for c in Condition], help="override the scenario's condition")
     parser.add_argument("--record", action="store_true", help="also print the research record as JSON")
+    parser.add_argument("--model", choices=["none", "anthropic"], default="none",
+                        help="reword approved lessons with a model (needs ANTHROPIC_API_KEY)")
+    parser.add_argument("--model-id", help="override the model identifier")
     args = parser.parse_args(argv)
 
     scenario = json.loads(args.scenario.read_text(encoding="utf-8"))
     if args.condition:
         scenario["condition"] = args.condition
-    result = run_session(scenario)
+    try:
+        adapter = make_adapter(args.model, args.model_id)
+    except ModelError as e:
+        parser.exit(2, f"error: {e} Set it in your shell, or run without --model.\n")
+    result = run_session(scenario, tutor=GroundedTutor(adapter) if adapter else None)
     print("\n".join(result.transcript))
     if args.record:
         print(json.dumps(result.record.to_dict(), indent=2))

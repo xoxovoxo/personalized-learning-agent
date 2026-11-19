@@ -98,6 +98,7 @@ class SessionRecord:
     fictional: bool = True
     schema_version: str = SCHEMA_VERSION
     prompt_version: str = "none-deterministic"
+    model_id: str | None = None
     evidence: list[Evidence] = field(default_factory=list)
     barrier: Barrier | None = None
     events: list[dict] = field(default_factory=list)

@@ -61,8 +61,19 @@ pytest
 | `src/pla/learner_model.py` | Session-only topic state with uncertainty and provenance |
 | `src/pla/planner.py` | Rule-based planner: override > prerequisite gap > barrier > standard |
 | `src/pla/session.py` | Scripted session runner and CLI |
+| `src/pla/llm.py` | Provider-independent model adapter (Anthropic, standard library only) |
+| `src/pla/tutor.py` | Grounded tutor: model rewording with validation and fallback |
 | `curriculum/fractions-equivalence.json` | Draft lessons and items (needs teacher review) |
 | `examples/scenarios/` | Fictional students: prerequisite gap, relevance, pace, override |
+
+### Optional: model-written wording
+
+```bash
+export ANTHROPIC_API_KEY=...   # server-side only; never commit it
+python -m pla.session examples/scenarios/pace.json --model anthropic --record
+```
+
+The planner still decides the strategy; the model only rewords the approved lesson steps (`src/pla/tutor.py`). Output that is empty, too long, or contains fractions not in the approved text is discarded, and the approved text is shown instead. Errors and timeouts fall back the same way, after bounded retries. Model ID, prompt version and every fallback are logged in the research record. Student free text is never sent to the model.
 
 All three comparison conditions (`fixed`, `knowledge_only`, `knowledge_and_barrier`) share the same curriculum, so only the adaptation rules differ. The research record stores item IDs, correctness, strategies and reasons, but no free text.
 
