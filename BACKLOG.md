@@ -1,6 +1,6 @@
 # Team work backlog
 
-All tasks are unassigned and not started. This version-controlled backlog does not imply a GitHub Projects board has been created.
+All tasks are unassigned. S01, S03 and X01 have a first deterministic draft (fictional data only, curriculum unreviewed); S02 has a minimal session-only version. This version-controlled backlog does not imply a GitHub Projects board has been created.
 
 | ID | Priority | Work package | Acceptance criteria | Dependencies |
 | --- | --- | --- | --- | --- |

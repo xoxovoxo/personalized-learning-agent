@@ -1,0 +1,9 @@
+{
+  "fictional": true,
+  "session_id": "demo-prereq-gap",
+  "description": "Misreads what a fraction means; no barrier reported.",
+  "condition": "knowledge_and_barrier",
+  "check_in": {"goal": "Understand equivalent fractions", "barrier": null, "interest": null},
+  "answers": {"baseline-01": "no", "baseline-02": "4", "baseline-03": "3", "meaning-01": "3/8", "equiv-01": "6"},
+  "feedback": ["helped", "helped"]
+}

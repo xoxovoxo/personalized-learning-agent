@@ -1,0 +1,9 @@
+{
+  "fictional": true,
+  "session_id": "demo-001",
+  "description": "Matches examples/student-profile.json: explanations move too quickly.",
+  "condition": "knowledge_and_barrier",
+  "check_in": {"goal": "Understand why 1/2 equals 2/4", "barrier": "pace", "interest": "cooking"},
+  "answers": {"baseline-01": "yes", "baseline-02": "1/4", "baseline-03": "", "equiv-01": "6"},
+  "feedback": ["helped"]
+}
