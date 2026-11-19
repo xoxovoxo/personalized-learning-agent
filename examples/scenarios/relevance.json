@@ -1,0 +1,9 @@
+{
+  "fictional": true,
+  "session_id": "demo-relevance",
+  "description": "Knows the prerequisite, finds the lesson irrelevant, likes cooking.",
+  "condition": "knowledge_and_barrier",
+  "check_in": {"goal": "Understand why 1/2 equals 2/4", "barrier": "relevance", "interest": "cooking"},
+  "answers": {"baseline-01": "yes", "baseline-02": "1/4", "baseline-03": "3", "equiv-01": "6"},
+  "feedback": ["helped"]
+}

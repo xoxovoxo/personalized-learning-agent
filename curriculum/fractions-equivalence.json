@@ -1,0 +1,80 @@
+{
+  "curriculum_version": "fractions-0.1",
+  "fictional": true,
+  "review_status": "draft - requires teacher review before any real-student use",
+  "target_topic": "fractions-equivalence",
+  "topics": {
+    "fractions-meaning": {
+      "title": "What a fraction means",
+      "objective": "Read a fraction as a number of equal parts out of a whole.",
+      "prerequisites": []
+    },
+    "fractions-equivalence": {
+      "title": "Equivalent fractions",
+      "objective": "Explain and produce equivalent fractions by multiplying or dividing the numerator and denominator by the same number.",
+      "prerequisites": ["fractions-meaning"]
+    }
+  },
+  "items": [
+    {"id": "baseline-01", "topic": "fractions-equivalence", "role": "baseline", "prompt": "Is 1/2 equal to 2/4? Answer yes or no.", "accepted": ["yes"]},
+    {"id": "baseline-02", "topic": "fractions-meaning", "role": "baseline", "prompt": "A pizza is cut into 4 equal slices and you eat 1. What fraction did you eat?", "accepted": ["1/4"]},
+    {"id": "baseline-03", "topic": "fractions-equivalence", "role": "baseline", "prompt": "Fill in the blank: 1/3 = ?/6", "accepted": ["2"]},
+    {"id": "meaning-01", "topic": "fractions-meaning", "role": "practice", "prompt": "A bar has 8 equal parts and 3 are shaded. What fraction is shaded?", "accepted": ["3/8"]},
+    {"id": "meaning-02", "topic": "fractions-meaning", "role": "practice", "prompt": "In the fraction 5/7, how many equal parts is the whole split into?", "accepted": ["7"]},
+    {"id": "equiv-01", "topic": "fractions-equivalence", "role": "practice", "prompt": "Fill in the blank: 2/3 = ?/9", "accepted": ["6"]},
+    {"id": "equiv-02", "topic": "fractions-equivalence", "role": "practice", "prompt": "Fill in the blank: 3/4 = 6/?", "accepted": ["8"]},
+    {"id": "equiv-03", "topic": "fractions-equivalence", "role": "practice", "prompt": "Is 2/5 equal to 4/10? Answer yes or no.", "accepted": ["yes"]},
+    {"id": "equiv-04", "topic": "fractions-equivalence", "role": "practice", "prompt": "Fill in the blank: 4/8 = 1/?", "accepted": ["2"]}
+  ],
+  "lessons": {
+    "fractions-meaning": {
+      "teach_prerequisite": {
+        "source_id": "lesson-meaning-standard-v1",
+        "steps": [
+          "A fraction describes equal parts of one whole.",
+          "The bottom number (denominator) says how many equal parts the whole is split into.",
+          "The top number (numerator) says how many of those parts we are talking about.",
+          "So 1/4 means: split the whole into 4 equal parts and take 1 of them."
+        ]
+      }
+    },
+    "fractions-equivalence": {
+      "standard": {
+        "source_id": "lesson-equiv-standard-v1",
+        "steps": [
+          "Equivalent fractions name the same amount using different numbers. If you multiply or divide the numerator and denominator by the same number, the amount stays the same: 1/2 = (1x2)/(2x2) = 2/4."
+        ]
+      },
+      "smaller_steps": {
+        "source_id": "lesson-equiv-steps-v1",
+        "steps": [
+          "Step 1: Picture 1/2 - one of two equal halves.",
+          "Step 2: Now cut each half into 2 smaller equal pieces. The whole now has 4 pieces.",
+          "Step 3: The half you had is now 2 of those 4 pieces, so it is 2/4.",
+          "Step 4: You cut every piece into 2, so both numbers were multiplied by 2. The amount did not change."
+        ]
+      },
+      "relevant_example": {
+        "source_id": "lesson-equiv-relevant-v1",
+        "interest_templates": {
+          "cooking": "A recipe needs 1/2 cup of milk, but you only have a 1/4-cup measure. Two 1/4 cups fill the same amount as 1/2 cup, so 1/2 = 2/4.",
+          "sports": "A match has 2 halves. Playing 1 half is the same as playing 2 of 4 quarters, so 1/2 = 2/4.",
+          "music": "One half note lasts as long as two quarter notes, so 1/2 = 2/4."
+        },
+        "fallback": "Sharing a sandwich: half a sandwich is the same amount as 2 quarters of that sandwich, so 1/2 = 2/4.",
+        "steps": [
+          "{example}",
+          "Multiplying the numerator and denominator by the same number keeps the amount the same."
+        ]
+      },
+      "hints_low_pressure": {
+        "source_id": "lesson-equiv-hints-v1",
+        "steps": [
+          "This is practice, not a test - mistakes are useful information.",
+          "Hint: compare the two denominators first. What number turns one into the other?",
+          "Then do the same thing to the numerator."
+        ]
+      }
+    }
+  }
+}

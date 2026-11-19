@@ -1,0 +1,9 @@
+{
+  "fictional": true,
+  "session_id": "demo-override",
+  "description": "Reports pace, then rejects the step-by-step format.",
+  "condition": "knowledge_and_barrier",
+  "check_in": {"goal": "Equivalent fractions", "barrier": "pace", "interest": "music"},
+  "answers": {"baseline-01": "yes", "baseline-02": "1/4", "baseline-03": "3", "equiv-01": "5", "equiv-02": "8"},
+  "feedback": ["reject", "helped"]
+}

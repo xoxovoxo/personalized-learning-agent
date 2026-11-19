@@ -4,7 +4,7 @@
 
 A research project for a professor and three students investigating how AI teaching can adapt to demonstrated knowledge, learning goals, and voluntarily reported learning barriers.
 
-**Status: research and implementation planning.** This repository contains project designs, a draft tutor prompt, and fictional examples. There is no running application, validated intervention, or experimental result yet. Roles and schedules below are proposals for team agreement.
+**Status: early prototype.** This repository contains project designs, a draft tutor prompt, fictional examples, and a deterministic command-line demonstrator (no language model yet). There is no validated intervention or experimental result. Roles and schedules below are proposals for team agreement.
 
 ## Research question
 
@@ -43,6 +43,39 @@ Explore knowledge gaps, unclear explanations, lack of relevance, task overload, 
 Build one complete tutoring session for equivalent fractions. Use three fictional scenarios: a prerequisite gap, a relevance concern, and a need for smaller steps. Explain the teaching choice, offer a lesson, check understanding with a new question, and revise the next step. Allow students to skip personal questions and override the teaching format.
 
 Begin with a deterministic planner and fixed curriculum, then add a language-model adapter. Keep adaptation rules separate from generated wording so the research comparison remains reproducible.
+
+## Running the demonstrator
+
+Requires Python 3.10+; no runtime dependencies.
+
+```bash
+pip install -e ".[dev]"      # or: export PYTHONPATH=src
+python -m pla.session examples/scenarios/pace.json
+python -m pla.session examples/scenarios/pace.json --condition fixed --record
+pytest
+```
+
+| Path | Contents |
+| --- | --- |
+| `src/pla/contracts.py` | Typed session contract (evidence, self-reported barrier, plan, research record) |
+| `src/pla/learner_model.py` | Session-only topic state with uncertainty and provenance |
+| `src/pla/planner.py` | Rule-based planner: override > prerequisite gap > barrier > standard |
+| `src/pla/session.py` | Scripted session runner and CLI |
+| `src/pla/llm.py` | Provider-independent model adapter (Anthropic, standard library only) |
+| `src/pla/tutor.py` | Grounded tutor: model rewording with validation and fallback |
+| `curriculum/fractions-equivalence.json` | Draft lessons and items (needs teacher review) |
+| `examples/scenarios/` | Fictional students: prerequisite gap, relevance, pace, override |
+
+### Optional: model-written wording
+
+```bash
+export ANTHROPIC_API_KEY=...   # server-side only; never commit it
+python -m pla.session examples/scenarios/pace.json --model anthropic --record
+```
+
+The planner still decides the strategy; the model only rewords the approved lesson steps (`src/pla/tutor.py`). Output that is empty, too long, or contains fractions not in the approved text is discarded, and the approved text is shown instead. Errors and timeouts fall back the same way, after bounded retries. Model ID, prompt version and every fallback are logged in the research record. Student free text is never sent to the model.
+
+All three comparison conditions (`fixed`, `knowledge_only`, `knowledge_and_barrier`) share the same curriculum, so only the adaptation rules differ. The research record stores item IDs, correctness, strategies and reasons, but no free text.
 
 ## Longer-term scope
 
